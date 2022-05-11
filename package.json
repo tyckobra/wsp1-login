@@ -7,10 +7,10 @@
         "dev": "nodemon -e js,html,njk ./bin/www",
         "test": "jest",
         "test:watch": "jest --watch",
-        "test:1-server": "jest --watch 1-server",
-        "test:2-login": "jest --watch 2-login",
-        "test:3-auth": "jest --watch 3-auth",
-        "test:4-register": "jest --watch 4-register"
+        "test:1": "jest --watch 1-server",
+        "test:2": "jest --watch 2-login",
+        "test:3": "jest --watch 3-auth",
+        "test:4": "jest --watch 4-register"
     },
     "dependencies": {
         "cookie-parser": "~1.4.4",

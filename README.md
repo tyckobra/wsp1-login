@@ -50,16 +50,6 @@ För testernas skull finns det en user skapad, test:test.
 * post logout
 * get profile
 
-# Tester
-
-I detta repo finns ett antal tester som ska utföras.
-Kommandon för att köra alla tester eller specifika tester är som följer.
-
-```bash
-npm run test
-npm run test register
-```
-
 # Arbetsgång
 
 Arbetet är uppdelat i följande huvudmoment, de består i sin tur av ett antal delmoment.
@@ -98,8 +88,8 @@ Ni kan till exempel välja att filtrera vilka tester som ska köras. För att g�
 
 Ni kan även köra dem med de script som finns i package.json.
 ```bash	
-npm run test:1-server
-npm run test:2-login
-npm run test:3-auth
-npm run test:4-register
+npm run test:1
+npm run test:2
+npm run test:3
+npm run test:4
 ```
