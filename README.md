@@ -74,18 +74,32 @@ Ni kommer att få instruktioner tilldela till er grupp. Varje del kommer att st�
 
 ## Tester
 
-Arbetet ni utför är att möta specifika krav från de tester som finns.
+I det här projektet finns ett antal tester, det är en hjälp för er att komma vidare och för att visa vad ni ska arbeta med. De är även en avstämning för när ni ska gå vidare.
+
+För att köra testerna används https://www.npmjs.com/package/jest
+Testerna körs med script som finns i ```package.json```.
+
 För att köra alla tester en gång, använd:
 ```bash	
 npm run test
 ```
-Mer användbar är att starta tester med watch:
+
+Mer användbar är att starta tester med watch (så de körs automatiskt när ni ändrar i projektet):
 ```bash
 npm run test:watch
 ```
-Detta kommer att köra alla tester först. Ni kan sedan välja att filtrera vilka tester som ska köras. För att göra det så väljer ni ```p``` och skriver testets namn. För det här projektet finns följande tester:
+
+När jest körs i watch läget så kan ni styra hur det ska köra testerna.
+Ni kan till exempel välja att filtrera vilka tester som ska köras. För att göra det så väljer ni ```p``` och skriver testets namn. För det här projektet finns följande tester:
 * 1-server
 * 2-login
 * 3-auth
 * 4-register
 
+Ni kan även köra dem med de script som finns i package.json.
+```bash	
+npm run test:1-server
+npm run test:2-login
+npm run test:3-auth
+npm run test:4-register
+```
