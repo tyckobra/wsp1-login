@@ -5,6 +5,7 @@ Setup är gjort ```express --no-view --git -css sass``` så kör template och kl
 ```bash
 cd wsp1-login
 npm install
+mysql -u user -p database < users.sql
 ```
 
 ## Kravspec
@@ -61,8 +62,6 @@ npm run test register
 
 # Arbetsgång
 
-Ni kommer att få instruktioner tilldela till er grupp. Varje del kommer att stämmas av med tillhörande tester. När detta är klart så är ni redo att gå vidare till nästa steg. 
-
 Arbetet är uppdelat i följande huvudmoment, de består i sin tur av ett antal delmoment.
 
 1. Setup
@@ -70,3 +69,23 @@ Arbetet är uppdelat i följande huvudmoment, de består i sin tur av ett antal 
 3. Utveckling
 4. Koda
 5. Extra
+
+Ni kommer att få instruktioner tilldela till er grupp. Varje del kommer att stämmas av med tillhörande tester. När detta är klart så är ni redo att gå vidare till nästa steg. 
+
+## Tester
+
+Arbetet ni utför är att möta specifika krav från de tester som finns.
+För att köra alla tester en gång, använd:
+```bash	
+npm run test
+```
+Mer användbar är att starta tester med watch:
+```bash
+npm run test:watch
+```
+Detta kommer att köra alla tester först. Ni kan sedan välja att filtrera vilka tester som ska köras. För att göra det så väljer ni ```p``` och skriver testets namn. För det här projektet finns följande tester:
+* 1-server
+* 2-login
+* 3-auth
+* 4-register
+

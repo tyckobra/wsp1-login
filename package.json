@@ -5,7 +5,8 @@
     "scripts": {
         "start": "node ./bin/www",
         "dev": "nodemon -e js,html,njk ./bin/www",
-        "test": "jest"
+        "test": "jest",
+        "test:watch": "jest --watch"
     },
     "dependencies": {
         "cookie-parser": "~1.4.4",
@@ -17,8 +18,8 @@
     "devDependencies": {
         "jest": "^28.1.0",
         "nodemon": "^2.0.16",
-        "supertest": "^6.2.3"
+        "supertest": "^6.2.3",
+        "supertest-session": "^4.1.0"
     },
-    "jest": {
-    }
+    "jest": {}
 }
