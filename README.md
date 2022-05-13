@@ -15,8 +15,9 @@ En användare ska kunna registrera ett nytt konto med användarnamn och lösenor
 
 * Nytt git repo för gruppen med dokumentation
 * Databas, tabell för användare
-* Node, express med nunjucks, sass
 * Routes enligt REST praxis
+* Paket, node, express med nunjucks, sass
+* Kodstil, detta ska bestämma, dokumentera och använda .prettierrc
 
 ## Databas
 
@@ -33,6 +34,10 @@ Tabellen för användare ska heta ```users``` och måste innehålla fält för `
 **requires auth**
 * post logout
 * get profile
+
+## Paket
+
+Vilka paket kommer ni att behöva för att kunna köra projektet.
 
 # Arbetsgång
 
