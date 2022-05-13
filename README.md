@@ -5,7 +5,6 @@ Setup är gjort ```express --no-view --git -css sass``` så kör template och kl
 ```bash
 cd wsp1-login
 npm install
-mysql -u user -p database < users.sql
 ```
 
 ## Kravspec
