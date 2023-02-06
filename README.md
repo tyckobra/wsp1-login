@@ -82,3 +82,9 @@ npm run test:2
 npm run test:3
 npm run test:4
 ```
+
+## Instruktioner
+
+Finns i mappen [instruktioner](/instruktioner/).
+Vi kommer att arbeta i grupperna och följa instruktionerna.
+Ni kommer att få en tidsram och fördelning om hur ni ska gå tillväga.
