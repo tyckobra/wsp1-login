@@ -1,5 +1,7 @@
 # Del 3 - Setup med Node
 
+Tid: ~20 min
+
 Använd er fork av projektet. Startfiler för projektet finns här.
 Se över startscript och liknande, se till att ni har en .gitignore som inte checkar in node_modules och eventuellt andra filer som inte ska vara med i repot.
 

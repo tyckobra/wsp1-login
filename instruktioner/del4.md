@@ -1,5 +1,7 @@
 # Del 4 - Login
 
+**Tid: ~60 min**
+
 Ni bör nu vara redo att köra igång och utveckla gruppens applikation.
 
 Validera hela tiden ert arbete mot testerna . Om ni inte kan få testerna att bli gröna så är det något som inte fungerar som det ska.
@@ -11,9 +13,18 @@ För att köra tester för denna del så används scriptet ```npm run test:2```.
 Börja med att skapa ett skelett för era routes och skapa tillhörande views.
 Utgå från er planering.
 
+Stäm av med testerna så att ni har rätt routes.
+
 ## Databas
 
-Återanvänd mysql kod från tidigare arbeten. Om ni vill skapa en user/testroute och kolla om kopplingen till databasen fungerar.
+Databaskoden för projektet utgår från filen ```/utils/database.js```.
+Testerna använder den och ni kan använda den i era router.
+
+```js
+const db = require('../utils/database');
+```
+
+Se till att ni har ```.env``` fil för databasuppgifterna. Använd er av skolans server.
 
 ## Säkerhet, att hasha lösenord
 
@@ -37,6 +48,8 @@ När det är skapat så använder ni denna output för att skapa/uppdatera en te
 
 ## Login
 
+**Tid: ~60 min**
+
 Vilken route postar ni till?
 Vad ska ske på post routen?
 
@@ -56,9 +69,11 @@ Ett flöde kan se ut som följer:
 
 Kod för att kontrollera lösenord med bcrypt
 
+```js
 bcrypt.compare(LÖSENFRÅNFROM, HASHFRÅNDB, function(err, result) {
 // result == true logga in, annars buuuu
 });
+```
 
 Förfarande kan även skrivas med promises, men då får ni kontrollera detta på bcrypt npm sidan.
 
