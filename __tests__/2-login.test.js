@@ -5,7 +5,7 @@ const { response } = require('../app');
 const bcrypt = require('bcrypt');
 
 const usersTable = process.env.DATABASE_USERSTABLE;
-const { user1, user2 } = require('../__mocks__/users');
+const [user1, user2] = require('../__mocks__/users');
 
 describe('2. Login', () => {
     /** Setup

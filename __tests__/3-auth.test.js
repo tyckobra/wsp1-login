@@ -5,6 +5,7 @@ const pool = require('../utils/database');
 const bcrypt = require('bcrypt');
 
 const usersTable = process.env.DATABASE_USERSTABLE;
+const [user1, user2] = require('../__mocks__/users');
 
 describe('3. Authentication', () => {
     let testSession = null;
@@ -15,12 +16,12 @@ describe('3. Authentication', () => {
     beforeAll(async () => {
         testSession = await session(app);
         try {
-            const hash = await bcrypt.hash('test', 10);
+            const hash = await bcrypt.hash(user1.password, 10);
             await pool
                 .promise()
                 .query(
                     `INSERT INTO ${usersTable} (name, password) VALUES (?,?)`,
-                    [testUsername, hash],
+                    [user1.name, hash],
                 );
         } catch (error) {
             console.log('Something went wrong with database setup: ');
@@ -55,8 +56,8 @@ describe('3. Authentication', () => {
          */
         beforeEach(async () => {
             await testSession.post('/login').send({
-                username: testUsername,
-                password: 'test',
+                username: user1.name,
+                password: user1.password,
             });
             authenticatedSession = testSession;
         });
@@ -75,7 +76,9 @@ describe('3. Authentication', () => {
             it('should return a html response with a profile page with a username', async () => {
                 expect.assertions(1);
                 const response = await authenticatedSession.get('/profile');
-                expect(response.text).toContain('<p>Username: test</p>');
+                expect(response.text).toContain(
+                    `<p>Username: ${user1.name}</p>`,
+                );
             });
             it('should return a html response with a profile page with a logout button', async () => {
                 expect.assertions(1);
@@ -107,11 +110,13 @@ describe('3. Authentication', () => {
         try {
             await pool
                 .promise()
-                .query(`DELETE FROM ${usersTable} WHERE name = "asdfhjkl"`);
+                .query(`DELETE FROM ${usersTable} WHERE name = ?`, [
+                    user2.name,
+                ]);
             await pool
                 .promise()
                 .query(`DELETE FROM ${usersTable} WHERE name = ?`, [
-                    testUsername,
+                    user1.name,
                 ]);
         } catch (error) {
             console.log('Something went wrong with database cleanup: ');

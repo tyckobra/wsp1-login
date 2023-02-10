@@ -4,6 +4,7 @@ const pool = require('../utils/database');
 const bcrypt = require('bcrypt');
 
 const usersTable = process.env.DATABASE_USERSTABLE;
+const [user1, user2] = require('../__mocks__/users');
 
 describe('4. Registration', () => {
     /** Setup
@@ -11,12 +12,12 @@ describe('4. Registration', () => {
      */
     beforeAll(async () => {
         try {
-            const hash = await bcrypt.hash('test', 10);
+            const hash = await bcrypt.hash(user1.password, 10);
             await pool
                 .promise()
                 .query(
                     `INSERT INTO ${usersTable} (name, password) VALUES (?,?)`,
-                    ['autotestuser', hash],
+                    [user1.name, hash],
                 );
         } catch (error) {
             console.log('Something went wrong with database setup: ');
@@ -87,7 +88,7 @@ describe('4. Registration', () => {
         it('should give an error with empty password field', async () => {
             expect.assertions(2);
             const response = await request(app).post('/register').send({
-                username: 'autotestuser',
+                username: 'testuser',
                 password: '',
                 passwordConfirmation: 'asdf',
             });
@@ -99,7 +100,7 @@ describe('4. Registration', () => {
             const response = await request(app).post('/register').send({
                 username: 'autotestuser',
                 password: 'asdf',
-                passwordConfirmation: '',
+                passwordConfirmation: 'notmatching',
             });
             expect(response.statusCode).toBe(200);
             expect(response.text).toContain('Passwords do not match');
@@ -107,7 +108,7 @@ describe('4. Registration', () => {
         it('should give an error when username is already taken', async () => {
             expect.assertions(2);
             const response = await request(app).post('/register').send({
-                username: 'autotestuser',
+                username: user1.name,
                 password: 'asdf',
                 passwordConfirmation: 'asdf',
             });
@@ -117,9 +118,9 @@ describe('4. Registration', () => {
         it('should register the user with correct credentials and redirect to /login', async () => {
             expect.assertions(2);
             const response = await request(app).post('/register').send({
-                username: 'asdfhjkl',
-                password: 'asdf',
-                passwordConfirmation: 'asdf',
+                username: user2.name,
+                password: user2.password,
+                passwordConfirmation: user2.password,
             });
             expect(response.statusCode).toBe(302);
             expect(response.headers.location).toBe('/login');
@@ -128,7 +129,7 @@ describe('4. Registration', () => {
             expect.assertions(2);
             const response = await request(app)
                 .post('/login')
-                .send({ username: 'asdfhjkl', password: 'asdf' });
+                .send({ username: user2.name, password: user2.password });
             expect(response.statusCode).toBe(302);
             expect(response.headers.location).toBe('/profile');
         });
@@ -141,10 +142,14 @@ describe('4. Registration', () => {
         try {
             await pool
                 .promise()
-                .query(`DELETE FROM ${usersTable} WHERE name = "asdfhjkl"`);
+                .query(`DELETE FROM ${usersTable} WHERE name = ?`, [
+                    user1.name,
+                ]);
             await pool
                 .promise()
-                .query(`DELETE FROM ${usersTable} WHERE name = "autotestuser"`);
+                .query(`DELETE FROM ${usersTable} WHERE name = ?`, [
+                    user2.name,
+                ]);
         } catch (error) {
             console.log('Something went wrong with database cleanup: ');
             console.log(error);
