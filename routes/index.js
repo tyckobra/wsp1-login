@@ -32,6 +32,9 @@ router.post('/login', async function(req, res, next) {
     else if(password == ""){
         res.send('Password is Required')
     }
+    else {
+        const[users] = await promisePool.query(``)
+    }
     
     bcrypt.hash(password, 10, function(err, hash) {
         
