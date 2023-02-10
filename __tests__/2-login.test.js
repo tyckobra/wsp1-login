@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 
 const usersTable = process.env.DATABASE_USERSTABLE;
 const [user1, user2] = require('../__mocks__/users');
+const { describe } = require('yargs');
 
 describe('2. Login', () => {
     /** Setup
@@ -25,6 +26,7 @@ describe('2. Login', () => {
             console.log(error);
         }
     });
+
     describe('GET /login', () => {
         it('should return a 200 response', async () => {
             expect.assertions(1);
