@@ -4,6 +4,8 @@ const session = require('supertest-session');
 const pool = require('../utils/database');
 const bcrypt = require('bcrypt');
 
+const usersTable = process.env.DATABASE_USERSTABLE;
+
 describe('3. Authentication', () => {
     let testSession = null;
     /** Setup
@@ -16,10 +18,10 @@ describe('3. Authentication', () => {
             const hash = await bcrypt.hash('test', 10);
             await pool
                 .promise()
-                .query(`INSERT INTO users (name, password) VALUES (?,?)`, [
-                    'test',
-                    hash,
-                ]);
+                .query(
+                    `INSERT INTO ${usersTable} (name, password) VALUES (?,?)`,
+                    [testUsername, hash],
+                );
         } catch (error) {
             console.log('Something went wrong with database setup: ');
             console.log(error);
@@ -53,7 +55,7 @@ describe('3. Authentication', () => {
          */
         beforeEach(async () => {
             await testSession.post('/login').send({
-                username: 'test',
+                username: testUsername,
                 password: 'test',
             });
             authenticatedSession = testSession;
@@ -103,8 +105,14 @@ describe('3. Authentication', () => {
      */
     afterAll(async () => {
         try {
-            await pool.promise().query('DELETE FROM users WHERE name = "asdf"');
-            await pool.promise().query('DELETE FROM users WHERE name = "test"');
+            await pool
+                .promise()
+                .query(`DELETE FROM ${usersTable} WHERE name = "asdfhjkl"`);
+            await pool
+                .promise()
+                .query(`DELETE FROM ${usersTable} WHERE name = ?`, [
+                    testUsername,
+                ]);
         } catch (error) {
             console.log('Something went wrong with database cleanup: ');
             console.log(error);
