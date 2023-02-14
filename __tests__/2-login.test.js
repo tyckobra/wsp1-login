@@ -17,10 +17,10 @@ describe('2. Login', () => {
             const hash = await bcrypt.hash(user1.password, 10);
             await pool
                 .promise()
-                .query(
-                    `INSERT INTO ${usersTable} (name, password) VALUES (?,?)`,
-                    [user1.name, hash],
-                );
+                .query(`INSERT INTO users (name, password) VALUES (?,?)`, [
+                    'test',
+                    hash,
+                ]);
         } catch (error) {
             console.log('Something went wrong with database setup: ');
             console.log(error);
@@ -110,16 +110,7 @@ describe('2. Login', () => {
      */
     afterAll(async () => {
         try {
-            await pool
-                .promise()
-                .query(`DELETE FROM ${usersTable} WHERE name = ?`, [
-                    user1.name,
-                ]);
-            await pool
-                .promise()
-                .query(`DELETE FROM ${usersTable} WHERE name = ?`, [
-                    user2.name,
-                ]);
+            await pool.promise().query('DELETE FROM users WHERE name = "test"');
         } catch (error) {
             console.log('Something went wrong with database cleanup: ');
             console.log(error);
