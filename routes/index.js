@@ -6,66 +6,47 @@ const db = require('../utils/database');
 const promisePool = db.promise();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-    res.render('index.njk', 
-    { 
-        title: 'Login ALC'
-    });
+router.get('/', function (req, res, next) {
+    res.render('index.njk',
+        {
+            title: 'Login ALC'
+        });
 });
 
-router.get('/login', async function(req, res, next) {
+router.get('/login', async function (req, res, next) {
     res.render('login.njk',
-    {
-        title: 'Login'
-    });
+        {
+            title: 'Login'
+        });
 });
 
-router.post('/login', async function(req, res, next) {
+router.post('/login', async function (req, res, next) {
     const { username, password } = req.body;
-    if(username == "" && password == "")
-    {
-        res.send('Username is Required')
+    if (username == "" && password == "") {
+        return res.send('Username is Required')
     }
-    else if(username == ""){
-        res.send('Username is Required')
+    else if (username == "") {
+        return res.send('Username is Required')
     }
-    else if(password == ""){
-        res.send('Password is Required')
+    else if (password == "") {
+        return res.send('Password is Required')
     }
     else {
-        const[users] = await promisePool.query(``)
+        //const [users] = await promisePool.query(SELECT efusers.`name`, efusers.`password` FROM efusers)
+        res.send()
     }
-    
-    bcrypt.hash(password, 10, function(err, hash) {
-        
-        // console.log(hash);
-        // return res.json(hash);
-    });
-    res.send()
 });
 
-router.get('/test', async function (req, res, next) {
-    res.render('test.njk',
-    {
-        title: 'TEST'
-    });
-});
+router.get('/crypt/:password', async function (req, res, next){
+    console.log(req.params)
+    const password = req.params.password
 
-router.post('/test', async function (req, res, next) {
-    const { password } = req.body;
-    try {
-        if(password != "")
-        {
-
-        }
-    } catch (error) {
-        console.log(error);
-    }
-    bcrypt.hash(password, 10, function(err, hash) {
+    bcrypt.hash(password, 10, function (err, hash) {
+        console.log(hash)
+        return res.json({ hash });
         
-        // console.log(hash);
-        // return res.json(hash);
     });
+
 })
 
 module.exports = router;
