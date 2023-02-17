@@ -5,6 +5,9 @@ const bcrypt = require('bcrypt')
 const db = require('../utils/database');
 const promisePool = db.promise();
 
+var session = require('express-session')
+const { request, response } = require('../app');
+
 /* GET home page. */
 router.get('/', function (req, res, next) {
     res.render('index.njk',
@@ -32,14 +35,14 @@ router.post('/login', async function (req, res, next) {
         return res.send('Password is Required')
     }
     else {
-        //const [users] = await promisePool.query(SELECT efusers.`name`, efusers.`password` FROM efusers)
-        //res.send()
         const [user] = await promisePool.query(`SELECT * FROM efusers WHERE name = ?`, [username])
         console.log(user[0])
         bcrypt.compare(password, user[0].password, function (err, result) {
             if(result === true)
             {
+                request.session.greger = 1;
                 return res.redirect('/profile')
+
             }
             else {
                 return res.send('Invalid username or password')
@@ -47,6 +50,25 @@ router.post('/login', async function (req, res, next) {
         })
     } 
 });
+
+router.get('/profile', async function (req, res, next)
+{
+    if (request.session.greger === 1 ) {
+        res.render('profile.njk', {
+            name: 'Namn'
+        })
+    }
+
+    else{
+        return res.send('F')
+    }
+})
+
+router.post('/profile', async function (req, res, next)
+{
+
+    
+})
 
 router.get('/crypt/:password', async function (req, res, next){
     console.log(req.params)
