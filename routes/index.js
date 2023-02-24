@@ -5,8 +5,6 @@ const bcrypt = require('bcrypt')
 const db = require('../utils/database');
 const promisePool = db.promise();
 
-var session = require('express-session')
-const { request, response } = require('../app');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -36,11 +34,10 @@ router.post('/login', async function (req, res, next) {
     }
     else {
         const [user] = await promisePool.query(`SELECT * FROM efusers WHERE name = ?`, [username])
-        console.log(user[0])
         bcrypt.compare(password, user[0].password, function (err, result) {
             if(result === true)
             {
-                request.session.greger = 1;
+                req.session.user = user[0]  //Ifall det går att logga in, spara användarens data i sessions variabeln 'user'
                 return res.redirect('/profile')
 
             }
@@ -53,21 +50,26 @@ router.post('/login', async function (req, res, next) {
 
 router.get('/profile', async function (req, res, next)
 {
-    if (request.session.greger === 1 ) {
+    if (req.session.user ) {        //Kollar ifall det finns en 'user' i sessionen
         res.render('profile.njk', {
-            name: 'Namn'
+            name: req.session.user.name
         })
     }
-
     else{
-        return res.send('F')
+        return res.status(401).send('Access denied')
     }
 })
 
-router.post('/profile', async function (req, res, next)
+router.post('/logout', async function (req, res, next)
 {
-
-    
+    if(req.session.user)
+    {
+        req.session.destroy()
+        return res.redirect('/')
+    }
+    else {
+        return res.status(401).send('Access denied')
+    }
 })
 
 router.get('/crypt/:password', async function (req, res, next){
