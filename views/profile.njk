@@ -2,5 +2,7 @@
 {% block content %}
 <h1>Profile</h1>
 <p>Username: {{ name }}</p>
-<button type="submit">Logout</button>
+<form action="/logout" method="POST">
+    <button type="submit">Logout</button>
+</form>
 {% endblock %}
