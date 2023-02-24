@@ -97,7 +97,7 @@ router.post('/register', async function (req, res, next) {
             if (rows.length === 0) {
                 const [user] = await promisePool.query("INSERT INTO efusers (name, password) VALUES (?, ?)", [username, hash])
                 req.session.user = user[0]
-                return res.redirect('/login')
+                return res.redirect('/profile')
             }
             else {
                 return res.send('Username is already taken')
