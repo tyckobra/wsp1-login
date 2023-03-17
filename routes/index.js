@@ -10,7 +10,7 @@ const promisePool = db.promise();
 router.get('/', function (req, res, next) {
     res.render('index.njk',
         {
-            title: 'Login ALC'
+            title: 'User Forum Home'
         });
 });
 
@@ -33,7 +33,7 @@ router.post('/login', async function (req, res, next) {
         return res.send('Password is Required')
     }
     else {
-        const [user] = await promisePool.query(`SELECT * FROM efusers WHERE name = ?`, [username])
+        const [user] = await promisePool.query(`SELECT * FROM tb02users WHERE name = ?`, [username])
         bcrypt.compare(password, user[0].password, function (err, result) {
             if (result === true) {
                 req.session.user = user[0]  //Ifall det går att logga in, spara användarens data i sessions variabeln 'user'
@@ -46,6 +46,40 @@ router.post('/login', async function (req, res, next) {
         })
     }
 });
+
+router.get('/loginposts', async function (req, res, next) {
+    res.render('loginposts.njk',
+        {
+            title: 'Login'
+        });
+});
+
+router.post('/loginposts', async function (req, res, next) {
+    const { username, password } = req.body;
+    if (username === "" && password === "") {
+        return res.send('Username is Required')
+    }
+    else if (username === "") {
+        return res.send('Username is Required')
+    }
+    else if (password === "") {
+        return res.send('Password is Required')
+    }
+    else {
+        const [user] = await promisePool.query(`SELECT * FROM tb02users WHERE name = ?`, [username])
+        bcrypt.compare(password, user[0].password, function (err, result) {
+            if (result === true) {
+                req.session.user = user[0]  //Ifall det går att logga in, spara användarens data i sessions variabeln 'user'
+                return res.redirect('/posts')
+
+            }
+            else {
+                return res.send('Invalid username or password')
+            }
+        })
+    }
+});
+
 
 router.get('/profile', async function (req, res, next) {
     if (req.session.user) {        //Kollar ifall det finns en 'user' i sessionen
@@ -92,10 +126,10 @@ router.post('/register', async function (req, res, next) {
 
         bcrypt.hash(password, 10, async function (err, hash) {
             console.log(hash)
-            const [rows] = await promisePool.query("SELECT * FROM efusers WHERE name = ?", [username])
+            const [rows] = await promisePool.query("SELECT * FROM tb02users WHERE name = ?", [username])
             console.log(rows[0])
             if (rows.length === 0) {
-                const [user] = await promisePool.query("INSERT INTO efusers (name, password) VALUES (?, ?)", [username, hash])
+                const [user] = await promisePool.query("INSERT INTO tb02users (name, password) VALUES (?, ?)", [username, hash])
                 req.session.user = user[0]
                 return res.redirect('/profile')
             }
@@ -122,5 +156,30 @@ router.get('/crypt/:password', async function (req, res, next) {
     });
 
 })
+
+router.get('/forum', async function(req, res, next) {
+    res.render('forum.njk',
+    {
+        title: 'Forum'
+    });
+    
+});
+
+router.post('/forum', async function(req, res, next) {
+    
+});
+
+router.get('/posts', async function(req, res, next) {
+    if (req.session.user) {        //Kollar ifall det finns en 'user' i sessionen
+        res.render('posts.njk', {
+            name: req.session.user.name,
+            title: 'Posts'
+        })
+    }
+    else {
+        res.redirect('/loginposts')
+    }
+});
+
 
 module.exports = router;
