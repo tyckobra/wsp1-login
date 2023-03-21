@@ -7,18 +7,24 @@ const promisePool = db.promise();
 
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/', async function (req, res, next) {
+    const [rows] = await promisePool.query("SELECT tb02forum.*, tb02users.name AS author FROM tb02forum JOIN tb02users on tb02forum.title = tb02users.id ORDER BY id DESC");
     res.render('index.njk',
         {
-            title: 'User Forum Home'
+            title: 'User Forum Home',
+            rows: rows,
         });
 });
 
 router.get('/login', async function (req, res, next) {
-    res.render('login.njk',
+    if (req.session.user) {
+        return res.send('Already signed in')
+    } 
+    else { res.render('login.njk',
         {
             title: 'Login'
         });
+    }
 });
 
 router.post('/login', async function (req, res, next) {
@@ -88,7 +94,7 @@ router.get('/profile', async function (req, res, next) {
         })
     }
     else {
-        return res.status(401).send('Access denied')
+        return res.redirect('/login')
     }
 })
 
@@ -157,6 +163,21 @@ router.get('/crypt/:password', async function (req, res, next) {
 
 })
 
+router.get('/posts/:id', async function (req, res, next){
+    const post = await promisePool.query('SELECT tb02forum.*, tb02users.name AS author FROM tb02forum JOIN tb02users ON tb02forum.authorID = tb02users.id WHERE tb02forum.id =');
+    if (req.session.user) {
+    res.render('posts.njk', { 
+        post: post[0][0], 
+        title: 'Create Post',
+        postId: postId,
+        comments: comments[0],
+    }); 
+    } else {
+        res.redirect('/loginposts')
+    }
+});
+
+
 router.get('/forum', async function(req, res, next) {
     res.render('forum.njk',
     {
@@ -169,17 +190,17 @@ router.post('/forum', async function(req, res, next) {
     
 });
 
-router.get('/posts', async function(req, res, next) {
+/*router.get('/posts', async function(req, res, next) {
     if (req.session.user) {        //Kollar ifall det finns en 'user' i sessionen
         res.render('posts.njk', {
             name: req.session.user.name,
-            title: 'Posts'
+            title: 'Create Post'
         })
     }
     else {
         res.redirect('/loginposts')
     }
 });
-
+*/
 
 module.exports = router;
