@@ -3,8 +3,14 @@
 <main class="container mt-3">
     <h1>{{ title }}</h1>
     <a href="/posts">Create Post</a>
-    <section>
-        {{ row.title }}
-    </section>
+
+    {% for row in rows %}
+        <section>
+            {{ row.id }} {{ row.authorId }} {{ row.author }}
+            <h1>{{ row.title }}</h1> <p>{{ row.content }}</p> 
+            <p>Created {{ row.createdAt }}</p>
+            <p>{{ row.name }}</p>
+        </section>
+    {% endfor %}
 </main>
 {% endblock %}

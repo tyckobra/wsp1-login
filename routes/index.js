@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt')
 
 const db = require('../utils/database');
 const promisePool = db.promise();
+const session = require('express-session');
+const { render } = require('nunjucks');
 
 
 /* GET home page. */
@@ -163,14 +165,14 @@ router.get('/crypt/:password', async function (req, res, next) {
 
 })
 
-router.get('/posts/:id', async function (req, res, next){
-    const post = await promisePool.query('SELECT tb02forum.*, tb02users.name AS author FROM tb02forum JOIN tb02users ON tb02forum.authorID = tb02users.id WHERE tb02forum.id =');
+router.get('/posts', async function (req, res, next){
+    const post = await promisePool.query("SELECT * FROM tb02forum");
     if (req.session.user) {
     res.render('posts.njk', { 
-        post: post[0][0], 
+
         title: 'Create Post',
-        postId: postId,
-        comments: comments[0],
+        name: req.session.user.name,
+        post: post
     }); 
     } else {
         res.redirect('/loginposts')
@@ -179,8 +181,9 @@ router.get('/posts/:id', async function (req, res, next){
 
 
 router.get('/forum', async function(req, res, next) {
-    res.render('forum.njk',
-    {
+    const [rows] = await promisePool.query("SELECT * FROM tb02forum");
+    res.render('forum.njk', {
+        rows: rows,
         title: 'Forum'
     });
     
