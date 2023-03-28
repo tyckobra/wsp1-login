@@ -6,10 +6,10 @@
 
     {% for row in rows %}
         <section>
-            {{ row.id }} {{ row.authorId }} {{ row.author }}
-            <h1>{{ row.title }}</h1> <p>{{ row.content }}</p> 
-            <p>Created {{ row.createdAt }}</p>
-            <p>{{ row.name }}</p>
+            <h1>Author {{ row.author }} {{ row.authorId }}</h1>
+            <p>Title {{ row.title }}</p>
+            <p>{{ row.content }} </p>
+            <p>Posted {{ row.createdAt }}</p>
         </section>
     {% endfor %}
 </main>

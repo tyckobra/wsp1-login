@@ -169,20 +169,48 @@ router.get('/posts', async function (req, res, next){
     const post = await promisePool.query("SELECT * FROM tb02forum");
     if (req.session.user) {
     res.render('posts.njk', { 
-
+        post: post,
         title: 'Create Post',
-        name: req.session.user.name,
-        post: post
+        name: req.session.user.name
+    
     }); 
     } else {
         res.redirect('/loginposts')
     }
 });
 
+router.post('/posts', async function (req, res, next) {
+    const { title, content } = req.body;
+    const authorId = req.session.userId;
+    if(title.length < 3){
+        res.json('Title must be at least 3 characters');
+    }
+    else if(content.length < 10){
+        res.json('Content must be at least 10 characters');
+    }
+    else{
+        if(req.session.loggedin){
+            const sanitize = (str) => {
+                let temp = str.trim();
+                temp = validator.stripLow(temp);
+                temp = validator.escape(temp);
+                return temp;
+            };
+            const sanitizedTitle = sanitize(title);
+            const sanitizedContent = sanitize(content);
+            const [] = await promisePool.query('INSERT INTO tb02forum (authorId, title, content) VALUES (?, ?, ?)', [authorId, sanitizedTitle, sanitizedContent]);
+            res.redirect('/');
+        }
+    }
+});
+
+
 
 router.get('/forum', async function(req, res, next) {
-    const [rows] = await promisePool.query("SELECT * FROM tb02forum");
+    const id = req.params.id
+    const [rows] = await promisePool.query("SELECT tb02forum.*, tb02users.name AS author, tb02users.id AS authorId FROM tb02forum JOIN tb02users");
     res.render('forum.njk', {
+        id: id,
         rows: rows,
         title: 'Forum'
     });
