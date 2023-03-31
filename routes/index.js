@@ -1,11 +1,11 @@
 const express = require('express');
+const bcrypt = require('bcrypt');
 const router = express.Router();
-const bcrypt = require('bcrypt')
-
-const db = require('../utils/database');
-const promisePool = db.promise();
+const pool = require('../utils/database');
 const session = require('express-session');
 const { render } = require('nunjucks');
+const validator = require('validator');
+const promisePool = pool.promise();
 
 
 /* GET home page. */
@@ -13,8 +13,9 @@ router.get('/', async function (req, res, next) {
     const [rows] = await promisePool.query("SELECT tb02forum.*, tb02users.name AS author FROM tb02forum JOIN tb02users on tb02forum.title = tb02users.id ORDER BY id DESC");
     res.render('index.njk',
         {
-            title: 'User Forum Home',
+
             rows: rows,
+            title: 'User Forum Home'
         });
 });
 
@@ -181,7 +182,7 @@ router.get('/posts', async function (req, res, next){
 
 router.post('/posts', async function (req, res, next) {
     const { title, content } = req.body;
-    const authorId = req.session.userId;
+    const authorId = req.session.user.id;
     if(title.length < 3){
         res.json('Title must be at least 3 characters');
     }
@@ -189,7 +190,7 @@ router.post('/posts', async function (req, res, next) {
         res.json('Content must be at least 10 characters');
     }
     else{
-        if(req.session.loggedin){
+        if(req.session.user){
             const sanitize = (str) => {
                 let temp = str.trim();
                 temp = validator.stripLow(temp);
@@ -198,8 +199,10 @@ router.post('/posts', async function (req, res, next) {
             };
             const sanitizedTitle = sanitize(title);
             const sanitizedContent = sanitize(content);
-            const [] = await promisePool.query('INSERT INTO tb02forum (authorId, title, content) VALUES (?, ?, ?)', [authorId, sanitizedTitle, sanitizedContent]);
-            res.redirect('/');
+            const [rows] = await promisePool.query('INSERT INTO tb02forum (authorId, title, content) VALUES (?, ?, ?)', [authorId, sanitizedTitle, sanitizedContent]);
+            res.redirect('/forum',[0],[0],rows)
+        }else {
+            res.redirect('/login')
         }
     }
 });

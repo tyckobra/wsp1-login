@@ -26,3 +26,6 @@ nya posts i forumet från hemsidan. Det gick frammåt men nu
 när jag ska skapa en post laddar det hela tiden bara, och 
 alla posts i mitt forum läggs upp av varje user.
 
+##23-03-31
+Idag har jag gjort så att det går att skapa posts.
+
