@@ -29,3 +29,7 @@ alla posts i mitt forum läggs upp av varje user.
 ##23-03-31
 Idag har jag gjort så att det går att skapa posts.
 
+##23-04-04
+Nu vill jag göra så att inläggen man postar är kopplade till
+rätt user och inte alla users.Jag listade inte ur hur jag
+skulle lösa problemet så jag skapade en riktig navigation istället.

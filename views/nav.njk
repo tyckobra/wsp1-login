@@ -1,0 +1,31 @@
+<nav>
+    <li>
+        <a href="/">Home</a>
+    </li>
+    <li>
+        <a href="/forum">Forum</a>
+    </li>
+    <li>
+        <a href="/posts">Create post</a>
+    </li>
+
+    {% if user %}
+        <div>
+            <li>
+                <a href="/profile">Profile</a>
+            </li>
+            <form action="/logout" method="POST">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
+    {% else %}
+        <div>
+            <li>
+                <a href="/login">Login</a>
+            </li>
+            <li>
+                <a href="/register">Register</a>
+            </li>
+        </div>
+    {% endif %}
+</nav>

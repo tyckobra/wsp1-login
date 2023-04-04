@@ -1,8 +1,8 @@
 {% extends "layout.njk" %}
 {% block  content %}
 <main class="container mt-3">
+
     <h1>{{ title }}</h1>
-    <a href="/posts">Create Post</a>
 
     {% for row in rows %}
         <section>
@@ -12,5 +12,6 @@
             <p>Posted {{ row.createdAt }}</p>
         </section>
     {% endfor %}
+
 </main>
 {% endblock %}
