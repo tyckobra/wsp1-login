@@ -30,5 +30,8 @@
         "supertest": "^6.2.3",
         "supertest-session": "^4.1.0"
     },
-    "jest": {}
+    "jest": {},
+    "engines": {
+        "node": ">=16"
+    }
 }

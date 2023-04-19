@@ -31,5 +31,11 @@ Idag har jag gjort så att det går att skapa posts.
 
 ##23-04-04
 Nu vill jag göra så att inläggen man postar är kopplade till
-rätt user och inte alla users.Jag listade inte ur hur jag
+rätt user och inte alla users. Jag listade inte ur hur jag
 skulle lösa problemet så jag skapade en riktig navigation istället.
+
+##23-04-18
+Första lektionen efter lovet, jag har bestämt mig för att fortsätta
+med att utveckla detta som projekt.
+Det är fullt fungerande nu i en enkelt form så jag ska börja med CSS
+nu för att fina till det. Kanske lägger till fler funktioner senare.

@@ -1,31 +1,14 @@
-<nav>
-    <li>
+<nav class="nav">
         <a href="/">Home</a>
-    </li>
-    <li>
         <a href="/forum">Forum</a>
-    </li>
-    <li>
         <a href="/posts">Create post</a>
-    </li>
-
     {% if user %}
-        <div>
-            <li>
-                <a href="/profile">Profile</a>
-            </li>
-            <form action="/logout" method="POST">
-                <button type="submit">Logout</button>
-            </form>
-        </div>
+        <a href="/profile">Profile</a>
+        <form action="/logout" method="POST" class="logout">
+            <button type="submit">Logout</button>
+        </form>
     {% else %}
-        <div>
-            <li>
-                <a href="/login">Login</a>
-            </li>
-            <li>
-                <a href="/register">Register</a>
-            </li>
-        </div>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
     {% endif %}
 </nav>

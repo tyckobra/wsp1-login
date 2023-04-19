@@ -5,10 +5,10 @@
     <h1>{{ title }}</h1>
 
     {% for row in rows %}
-        <section>
-            <h1>Author {{ row.author }} {{ row.authorId }}</h1>
-            <p>Title {{ row.title }}</p>
+        <section class="post">
+            <h1>{{ row.title }}</h1>
             <p>{{ row.content }} </p>
+            <p>Posted By {{ row.author }} </p>
             <p>Posted {{ row.createdAt }}</p>
         </section>
     {% endfor %}
