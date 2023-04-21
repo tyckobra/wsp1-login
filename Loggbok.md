@@ -39,3 +39,8 @@ Första lektionen efter lovet, jag har bestämt mig för att fortsätta
 med att utveckla detta som projekt.
 Det är fullt fungerande nu i en enkelt form så jag ska börja med CSS
 nu för att fina till det. Kanske lägger till fler funktioner senare.
+
+##23-04-21
+Idag ska jag fortsätta med css:en på forumet, sen vill jag även snygga
+till knapparna och lägga till hover effekter. En till sak jag vill göra
+är att lägga till profilbilder.
