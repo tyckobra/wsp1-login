@@ -13,7 +13,6 @@ router.get('/', async function (req, res, next) {
     const [rows] = await promisePool.query("SELECT tb02forum.*, tb02users.name AS author FROM tb02forum JOIN tb02users on tb02forum.title = tb02users.id ORDER BY id DESC");
     res.render('index.njk',
         {
-
             rows: rows,
             title: 'User Forum Home',
             user: req.session.user
@@ -28,7 +27,6 @@ router.get('/login', async function (req, res, next) {
         {
             title: 'Login',
             user: req.session.user
-
         });
     }
 });
@@ -64,7 +62,6 @@ router.get('/loginposts', async function (req, res, next) {
         {
             title: 'Login',
             user: req.session.user
-
         });
 });
 
@@ -85,7 +82,6 @@ router.post('/loginposts', async function (req, res, next) {
             if (result === true) {
                 req.session.user = user[0]  //Ifall det går att logga in, spara användarens data i sessions variabeln 'user'
                 return res.redirect('/posts')
-
             }
             else {
                 return res.send('Invalid username or password')
@@ -96,17 +92,23 @@ router.post('/loginposts', async function (req, res, next) {
 
 
 router.get('/profile', async function (req, res, next) {
-    if (req.session.user) {        //Kollar ifall det finns en 'user' i sessionen
+    const [rows] = await promisePool.query("SELECT * FROM tb02forum");
+    if (req.session.user) {
         res.render('profile.njk', {
+            rows: rows,
             name: req.session.user.name,
-            user: req.session.user
-
         })
     }
     else {
         return res.redirect('/login')
     }
 })
+
+/*router.post('/profile', async function (req, res, next) {
+    const [rows] = await promisePool.query("SELECT * FROM tb02forum");
+    const user = req.session.user
+    if (user)
+})*/
 
 router.post('/logout', async function (req, res, next) {
     if (req.session.user) {
@@ -174,14 +176,11 @@ router.get('/crypt/:password', async function (req, res, next) {
 })
 
 router.get('/posts', async function (req, res, next){
-
     if (req.session.user) {
     res.render('posts.njk', { 
-
         title: 'Create Post',
         name: req.session.user.name,
         user: req.session.user
-
     }); 
     } else {
         res.redirect('/loginposts')
@@ -220,16 +219,11 @@ router.post('/posts', async function (req, res, next) {
 
 router.get('/forum', async function(req, res, next) {
     const [rows] = await promisePool.query("SELECT * FROM tb02forum");
-
-//const [rows] = await promisePool.query("SELECT tb02forum.*, tb02users.id AS authorId, tb02users.name AS author FROM tb02forum JOIN tb02users");
     res.render('forum.njk', {
-
         rows: rows,
         title: 'Forum',
         user: req.session.user
-
     });
-    
 });
 
 router.post('/forum', async function(req, res, next) {

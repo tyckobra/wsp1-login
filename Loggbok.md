@@ -44,3 +44,6 @@ nu för att fina till det. Kanske lägger till fler funktioner senare.
 Idag ska jag fortsätta med css:en på forumet, sen vill jag även snygga
 till knapparna och lägga till hover effekter. En till sak jag vill göra
 är att lägga till profilbilder.
+Jag gjorde en snyggare navbar och sen laddade jag upp på glitch. Jag
+började inte med profilbild än, kom på att jag vill göra så att sina
+egna posts syns på sin profil.
