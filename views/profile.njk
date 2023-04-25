@@ -1,7 +1,7 @@
 {% extends "layout.njk" %}
 {% block content %}
-<h1>Profile</h1>
-<p>Username: {{ name }}</p>
+<main>
+<h1>{{ name }} Profile</h1>
     {% for row in rows %}
         <section class="post">
             <p>{{ row.author }}</p>
@@ -9,5 +9,6 @@
             <p>{{ row.content }} </p>
             <p>Posted {{ row.createdAt }}</p>
         </section>
-    {% endfor %}
+{% endfor %}
+</main>
 {% endblock %}

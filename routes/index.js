@@ -60,7 +60,7 @@ router.post('/login', async function (req, res, next) {
 router.get('/loginposts', async function (req, res, next) {
     res.render('loginposts.njk',
         {
-            title: 'Login',
+            title: 'Please Login To Create A Post',
             user: req.session.user
         });
 });
@@ -97,6 +97,7 @@ router.get('/profile', async function (req, res, next) {
         res.render('profile.njk', {
             rows: rows,
             name: req.session.user.name,
+            user: req.session.user
         })
     }
     else {
@@ -122,7 +123,8 @@ router.post('/logout', async function (req, res, next) {
 
 router.get('/register', async function (req, res, next) {
     res.render('register.njk', {
-        user: req.session.user
+        user: req.session.user,
+        title: 'Register'
     })
 })
 

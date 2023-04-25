@@ -47,3 +47,8 @@ till knapparna och lägga till hover effekter. En till sak jag vill göra
 Jag gjorde en snyggare navbar och sen laddade jag upp på glitch. Jag
 började inte med profilbild än, kom på att jag vill göra så att sina
 egna posts syns på sin profil.
+
+##23-04-25
+Eftersom Jens inte var på lektionen idag har jag jobbat mer med CSS 
+så nu ser loginfälten finare ut. Min plan var igentligen att få hjälp
+med att göra så att en users inlägg visades i dens profil. 

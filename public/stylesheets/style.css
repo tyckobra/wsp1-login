@@ -31,9 +31,21 @@ main {
 
 .nav {
   display: block;
+  font-size: large;
 }
-
 
 .logout {
   float: right;
+}
+
+.login {
+  margin-top: 40px;
+  font-size: large;
+}
+
+.padding {
+  display: flex;
+  margin: 10px;
+  padding: 6px;
+  font-size: large;
 }
