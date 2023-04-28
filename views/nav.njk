@@ -4,9 +4,12 @@
         <a href="/posts">Create post</a>
     {% if user %}
         <a href="/profile">Profile</a>
-        <form action="/logout" method="POST" class="logout">
+    <div class="logut">
+        <p class="signed">Signed in as: {{ name }}</p>
+        <form action="/logout" method="POST">
             <button type="submit" class="padding">Logout</button>
         </form>
+    <div>
     {% else %}
         <a href="/login">Login</a>
         <a href="/register">Register</a>

@@ -30,12 +30,15 @@ main {
 }
 
 .nav {
-  display: block;
+  display: flex;
+  align-items: center;
   font-size: large;
+  max-height: 10px;
 }
 
-.logout {
-  float: right;
+.logut {
+  display: flex;
+  justify-items: end;
 }
 
 .login {
@@ -48,4 +51,12 @@ main {
   margin: 10px;
   padding: 6px;
   font-size: large;
+}
+
+.Signed {
+  padding-inline: 10px;
+  text-align: center;
+  text-decoration: none;
+  padding: 12px 16px;
+  color: black;
 }

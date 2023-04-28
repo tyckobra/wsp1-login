@@ -11,12 +11,11 @@ const promisePool = pool.promise();
 /* GET home page. */
 router.get('/', async function (req, res, next) {
     const [rows] = await promisePool.query("SELECT tb02forum.*, tb02users.name AS author FROM tb02forum JOIN tb02users on tb02forum.title = tb02users.id ORDER BY id DESC");
-    res.render('index.njk',
-        {
+    res.render('index.njk', {
             rows: rows,
             title: 'User Forum Home',
-            user: req.session.user
-        });
+            user: req.session.user,
+        }); 
 });
 
 router.get('/login', async function (req, res, next) {
@@ -222,9 +221,9 @@ router.post('/posts', async function (req, res, next) {
 router.get('/forum', async function(req, res, next) {
     const [rows] = await promisePool.query("SELECT * FROM tb02forum");
     res.render('forum.njk', {
+        user: req.session.user,
         rows: rows,
         title: 'Forum',
-        user: req.session.user
     });
 });
 
