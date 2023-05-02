@@ -56,3 +56,7 @@ med att göra så att en users inlägg visades i dens profil.
 ##23-04-28
 Har försöka lägga till en signed in sak som visar vilket konto man är
 inloggad med men ingenting funkar.
+
+##23-05-02
+Nu står det uppe i navbaren vilket konto man är inloggat på, fräschade
+upp create post sidan så den ser fin ut.

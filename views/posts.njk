@@ -2,14 +2,11 @@
 {% block  content %}
 <main class="container mt-3">
     <h1>{{ title }}</h1>
-    <p> Signed in as: {{ name }}</p>
 
 <form action="/posts" method="post">
-    <label for="title">Title</label>
-    <input type="text" name="title" id="title">
-    <label for="content">Content</label>
-    <textarea name="content" id="content" cols="30" rows="10"></textarea>
-    <button type="submit">Post</button>
+    <input type="text" name="title" id="title" placeholder="Title" class="titlefield">
+    <textarea name="content" id="content" cols="30" rows="10" placeholder="Content" class="contentfield"></textarea>
+    <button type="submit" class="padding">Post</button>
 </form>
 
 </main>
