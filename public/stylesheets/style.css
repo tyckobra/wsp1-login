@@ -38,8 +38,9 @@ main {
 
 .logut {
   display: flex;
-  justify-content: end;
-  text-align: end;
+  justify-content: right;
+  text-align: right;
+  float: right;
 }
 
 .login {
