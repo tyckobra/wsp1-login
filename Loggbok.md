@@ -60,3 +60,7 @@ inloggad med men ingenting funkar.
 ##23-05-02
 Nu står det uppe i navbaren vilket konto man är inloggat på, fräschade
 upp create post sidan så den ser fin ut.
+
+##23-05-16
+Idag har jag gjort så att man kan se enbart sina egna posts på sin profil.
+Logutknappen ligger på höger sida nu också.

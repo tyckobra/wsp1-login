@@ -54,6 +54,9 @@ router.post('/login', async function (req, res, next) {
         const [user] = await promisePool.query(`SELECT * FROM tb02users WHERE name = ?`, [username])
         bcrypt.compare(password, user[0].password, function (err, result) {
             if (result === true) {
+                // sätt userid
+                req.session.userid = user[0].id
+                console.log(user[0].id)
                 req.session.user = user[0]  //Ifall det går att logga in, spara användarens data i sessions variabeln 'user'
                 return res.redirect('/profile')
 
@@ -65,42 +68,8 @@ router.post('/login', async function (req, res, next) {
     }
 });
 
-router.get('/loginposts', async function (req, res, next) {
-    res.render('loginposts.njk',
-        {
-            title: 'Please Login To Create A Post',
-            user: req.session.user
-        });
-});
-
-router.post('/loginposts', async function (req, res, next) {
-    const { username, password } = req.body;
-    if (username === "" && password === "") {
-        return res.send('Username is Required')
-    }
-    else if (username === "") {
-        return res.send('Username is Required')
-    }
-    else if (password === "") {
-        return res.send('Password is Required')
-    }
-    else {
-        const [user] = await promisePool.query(`SELECT * FROM tb02users WHERE name = ?`, [username])
-        bcrypt.compare(password, user[0].password, function (err, result) {
-            if (result === true) {
-                req.session.user = user[0]  //Ifall det går att logga in, spara användarens data i sessions variabeln 'user'
-                return res.redirect('/posts')
-            }
-            else {
-                return res.send('Invalid username or password')
-            }
-        })
-    }
-});
-
-
 router.get('/profile', async function (req, res, next) {
-    const [rows] = await promisePool.query("SELECT * FROM tb02forum");
+    const [rows] = await promisePool.query("SELECT * FROM tb02forum WHERE authorId= ?", [req.session.userid]);
     if (req.session.user) {
         res.render('profile.njk', {
             rows: rows,
@@ -193,7 +162,7 @@ router.get('/posts', async function (req, res, next){
         user: req.session.user
     }); 
     } else {
-        res.redirect('/loginposts')
+        res.redirect('/login')
     }
 });
 

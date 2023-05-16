@@ -29,6 +29,10 @@ main {
   background-color: white;
 }
 
+.created {
+  font-size: x-small;
+}
+
 .nav {
   display: flex;
   align-items: center;
@@ -38,9 +42,7 @@ main {
 
 .logut {
   display: flex;
-  justify-content: right;
-  text-align: right;
-  float: right;
+  margin-left: auto;
 }
 
 .login {
